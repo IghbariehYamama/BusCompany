@@ -1,0 +1,283 @@
+﻿@model TranspoFinal2.Models.Credit_Card
+@{
+    ViewData["Title"] = "AddCardInfo";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="style.css">
+    <meta name="robots" content="noindex,follow" />
+    <!------ Include the above in your HEAD tag ---------->
+
+    <style>
+
+        body {
+            margin: auto;
+            background: linear-gradient( #de9b35, #FEB58A) fixed; /* W3C, IE 10+ / Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            font-family: 'Open Sans', sans-serif;
+        }
+        .container {
+            background: #fff;
+            box-shadow: 15px 20px 0px rgba(0,0,0,0.1);
+        }
+        /* Global */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        caret.png
+        body,
+        html {
+            height: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            margin: 0;
+            background-color: #e7e7e7;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Credit Card */
+
+        .credit-card {
+            width: 360px;
+            height: 400px;
+            margin: 60px auto 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #fff;
+            box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
+        }
+
+        .form-header {
+            height: 60px;
+            padding: 20px 30px 0;
+            border-bottom: 1px solid #E1E8EE;
+        }
+
+        .form-body {
+            height: 340px;
+            padding: 30px 30px 20px;
+        }
+
+        /* Title */
+
+        .title {
+            margin: 0;
+            color: #5e6977;
+            font-size: 18px;
+        }
+
+        /* Common */
+
+        .card-number,
+        .cvv-input input,
+        .month select,
+        .paypal-btn,
+        .proceed-btn,
+        .year select {
+            height: 42px;
+        }
+
+        .card-number,
+        .month select,
+        .year select {
+            font-size: 14px;
+            font-weight: 100;
+            line-height: 14px;
+        }
+
+        .card-number,
+        .cvv-details,
+        .cvv-input input,
+        .month select,
+        .year select {
+            color: #86939e;
+            opacity: .7;
+        }
+
+        /* Card Number */
+
+        .card-number {
+            width: 100%;
+            margin-bottom: 20px;
+            padding-left: 20px;
+            border: 2px solid #e1e8ee;
+            border-radius: 6px;
+        }
+
+        /* Date Field */
+
+        .month select,
+        .year select {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            width: 145px;
+            margin-bottom: 20px;
+            padding-left: 20px;
+            border: 2px solid #e1e8ee;
+            border-radius: 6px;
+            background: url('https://designmodo.com/demo/creditcardform/caret.png') no-repeat;
+            background-position: 85% 50%;
+        }
+
+        .month select {
+            float: left;
+        }
+
+        .year select {
+            float: right;
+        }
+
+        /* Card Verification Field */
+
+        .cvv-input input {
+            width: 145px;
+            float: left;
+            padding-left: 20px;
+            border: 2px solid #e1e8ee;
+            border-radius: 6px;
+            background: #fff;
+        }
+
+        .cvv-details {
+            float: right;
+            margin-bottom: 20px;
+            font-size: 12px;
+            font-weight: 300;
+            line-height: 16px;
+        }
+
+            .cvv-details p {
+                margin-top: 6px;
+            }
+
+        /* Buttons Section */
+
+        .paypal-btn,
+        .proceed-btn {
+            cursor: pointer;
+            width: 100%;
+            border-color: transparent;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .proceed-btn {
+            margin-bottom: 10px;
+            background: #7dc855;
+        }
+
+            .paypal-btn a,
+            .proceed-btn a {
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            .proceed-btn a {
+                color: #fff;
+            }
+
+        .paypal-btn a {
+            color: rgba(242, 242, 242, 0.7);
+        }
+
+        .paypal-btn {
+            padding-right: 95px;
+            background: url('https://designmodo.com/demo/creditcardform/paypal-logo.svg') no-repeat 65% 56% #009cde;
+        }
+
+    </style>
+</head>
+<body>
+
+    <br />
+    <br />
+    <br />
+    <div class="container" style="width:60%; padding:30px; margin-bottom:25px">
+        <h1>Please Fill In Your Card Details</h1>
+
+        <form asp-action="Register" asp-controller="Auth" class="credit-card" method="post" enctype="multipart/form-data">
+            <div class="form-header">
+                <h4 class="title">Credit card detail</h4>
+            </div>
+
+            <div class="form-body">
+                <!-- Card Number -->
+                <input asp-for="card_ID" type="text" class="card-number" placeholder="Card Number">
+
+                <!-- Date Field -->
+                <div class="date-field">
+                    <div class="month">
+                        <select asp-for="month">
+                            <option value="01/">January</option>
+                            <option value="02/">February</option>
+                            <option value="03/">March</option>
+                            <option value="04/">April</option>
+                            <option value="05/">May</option>
+                            <option value="06/">June</option>
+                            <option value="07/">July</option>
+                            <option value="08/">August</option>
+                            <option value="09/">September</option>
+                            <option value="10/">October</option>
+                            <option value="11/">November</option>
+                            <option value="12/">December</option>
+                        </select>
+                    </div>
+                    <div class="year">
+                        <select asp-for="year">
+                            <option value="19">2019</option>
+                            <option value="20">2020</option>
+                            <option value="21">2021</option>
+                            <option value="22">2022</option>
+                            <option value="23">2023</option>
+                            <option value="24">2024</option>
+                            <option value="25">2025</option>
+                            <option value="26">2026</option>
+                            <option value="27">2027</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Card Verification Field -->
+                <div class="card-verification">
+                    <div class="cvv-input">
+                        <input asp-for="card_CVV" type="text" placeholder="CVV">
+                    </div>
+                    <div class="cvv-details">
+                        <p>3 or 4 digits usually found <br> on the signature strip</p>
+                    </div>
+                </div>
+
+                <div class="card-verification">
+                    <div class="cvv-input">
+                        <input asp-for="money_amount" type="number" placeholder="Money">
+                    </div>
+                    <div class="cvv-details">
+                        <p> </p>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <button type="submit" class="proceed-btn">Finish</button>
+            </div>
+        </form>
+
+    </div>
+
+
+
+
+</body>
+
+</html>
+
+

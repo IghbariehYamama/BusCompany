@@ -1,0 +1,98 @@
+﻿@model TranspoFinal2.Models.Transactions
+@{
+    ViewData["Title"] = "Ticket Info";
+}
+
+<!DOCTYPE html>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<html>
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        body {
+            background: linear-gradient( #de9b35, #FEB58A) fixed; /* W3C, IE 10+ / Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+    </style>
+
+</head>
+
+<body>
+    <br />
+    <br />
+    <br />
+    <!-- Top header -->
+
+    <div class="w-50 px-3 py-3 pt-md-4 pb-md-4 mx-auto text-center">
+        <h1 class="display-4 font-weight-bold">Your Ticket Info</h1>
+        <p class="lead">
+
+        </p>
+    </div>
+    <!-- Cards container -->
+    <div class="container text-center">
+        <div class="row">
+            <!-- Card #1, Starter -->
+            <div class="col-lg-4 col-md-6 col-sm-10 pb-4 d-block m-auto">
+
+            </div>
+            <!-- Card #2, Intermediate -->
+            <div class="col-lg-4 col-md-6 col-sm-10 pb-4 d-block m-auto"  style="background: #fff;">
+                <div class="pricing-item" style="box-shadow: 0px 0px 30px -7px rgba(0,0,0,0.29);">
+
+                    <div class="pricing-price pb-1 text-primary color-primary-text ">
+                        <h1 style="font-weight: 1000; font-size: 3.5em;">
+                            @Model.route_ID
+                        </h1>
+                    </div>
+                    <div class="pt-4 pb-3" style="letter-spacing: 2px">
+                        <h4> <span style="font-size: 20px;">₪</span>@Model.money_amount</h4>
+                    </div>
+                    <div class="pricing-description">
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li class="pl-3 pr-3">Seat Num: @ViewBag.seat</li>
+                            <li class="pl-3 pr-3"></li>
+                        </ul>
+                    </div>
+                    <div class="pricing-button pb-4">
+
+                        <form method="post" id="sampleform" asp-action="DeleteTicket">
+                            <input asp-for="the_ID" type="hidden" />
+                            <input id="Create" type="button" value="Delete Ticket" class="btn btn-lg btn-primary w-75" style="position:center" />
+
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+                            <script type="text/javascript">
+                                $(function () {
+                                    $("#Create").click(function (e) {
+                                        if (confirm("Are you sure you want to delete this ticket?")) {
+                                            console.log('Form is submitting');
+                                            $("#sampleform").submit();
+                                        } else {
+                                            console.log('User clicked no.');
+                                        }
+                                    });
+                                });
+                            </script>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Card #3, Professional -->
+            <div class="col-lg-4 col-md-6 col-sm-10 pb-4 d-block m-auto">
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"
+            integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+</body>
+</html>

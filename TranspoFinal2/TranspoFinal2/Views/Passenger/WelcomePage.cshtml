@@ -1,0 +1,359 @@
+﻿@model TranspoFinal2.Models.Ticket
+@{
+    ViewData["Title"] = "Welcome To Transpo!";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Northstreet Restaurant">
+    <meta name="author" content="A.K.">
+
+    <link href="~/css/welcomepagestyle.css" rel="stylesheet" />
+
+
+
+</head>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+    <div class="jumbotron">
+
+        <ul class="bg-bubbles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="container-fluid" style="background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%)">
+
+            <div class="wrapper">
+
+                <div class="container">
+
+                    @{ if (User.IsInRole("Passenger") || User.IsInRole("Manager"))
+                        {
+                            <h1>Welcome @ViewBag.name to Transpo!</h1>
+
+                        }
+
+                        else
+                        {
+
+                            <h1>Welcome to Transpo!</h1>
+
+                        }
+                    }
+                    <h3>Let's begin our next adventure!</h3>
+
+                    <form class="form" method="post" asp-action="ChooseBus">
+                        <input asp-for="from_destination" type="text" placeholder="Origin...">
+                        <input asp-for="to_destination" type="text" placeholder="Destination...">
+                        <button type="submit" id="login-button">Go Go!</button>
+                    </form>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <section class="bg-service bg-section" id="service">
+        <div class="container-fluid text-center">
+            <h1 class="container-h1">Our Services</h1>
+            <div class="row service-round-3 slideanim">
+                <div class="col-sm-4 text-center round">
+                    <div class="service-round b-party">
+                        <img src="~/images/Ticket-128.png" height="100" width="100" />
+                    </div>
+                    <h4>Buy Tickets</h4>
+                    <p>You can buy your ticket and reserve your seat beforehand</p>
+                </div>
+                <div class="col-sm-4 text-center round">
+                    <div class="service-round wedding">
+                        <img src="~/images/Sale-Discount-128.png" height="100" width="100" />
+                    </div>
+                    <h4>Get a Discount</h4>
+                    <p>Enjoy Our Discounts on Holidays</p>
+                </div>
+                <div class="col-sm-4 text-center round">
+                    <div class="service-round b-dinner">
+                        <img src="~/images/Customer-Service-128.png" height="100" width="100" />
+                    </div>
+                    <h4>Make Friends</h4>
+                    <p>You can contact our staff and get friendly</p>
+                </div>
+            </div>
+            @if (!User.IsInRole("Manager") && !(User.IsInRole("Passenger")))
+            {
+                <a asp-action="ViewRegister" asp-controller="Passenger" class="btn">Sign Up</a>
+
+            }
+        </div>
+    </section>
+
+
+
+    <section class="bg-staff" id="staff">
+        <div class="container-fluid">
+            <h3>Our staff</h3>
+            <hr class="hr-h3s">
+            <div class="row text-center slideanim thumbnail-row">
+                <div class="col-sm-3">
+                    <div class="staff">
+                        <img src="https://res.cloudinary.com/dbte0ueti/image/upload/v1536952566/new/manager.jpg" class="" alt="chef-img" style="width:170px; height: 170px">
+                        <h5 class="">John Johnson</h5>
+                        <h6>Manager</h6>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="staff">
+                        <img src="https://res.cloudinary.com/dbte0ueti/image/upload/v1536952565/new/chef1.jpg" class="" alt="chef-img" style="width:170px; height: 170px">
+                        <h5 class="">Anna Schmidt</h5>
+                        <h6>Executive Manager</h6>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="staff">
+                        <img src="https://res.cloudinary.com/dbte0ueti/image/upload/v1536952566/new/chef3.jpg" class="" alt="chef-img" style="width:170px; height: 170px">
+                        <h5 class="">Ivan Gonzales</h5>
+                        <h6>Bus Driver</h6>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="staff">
+                        <img src="https://res.cloudinary.com/dbte0ueti/image/upload/v1536952566/new/chef2.jpg" class="" alt="chef-img" style="width:170px; height: 170px">
+                        <h5 class="">Joseph Martinez</h5>
+                        <h6>Bus Driver</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-contact bg-section" id="contact">
+        <div class="container-fluid">
+            <h1 class="container-h1">Contact us</h1>
+            <div class="row slideanim">
+                <div class="col-md-6 col-sm-6 contact-left">
+                    <div class="left-box">
+                        <address class="contact">
+                            <span class="span-contact">Call:</span>
+                            <br>
+                            +972 123 5672
+                            <br>
+                            <span class="span-contact">Email:</span>
+                            <br>
+                            Transpo.trns@gmail.com
+                            <br>
+                            <span class="span-contact">Visit:</span>
+                            <br>
+                            22, Northstreet Road
+                            <br>
+                            Melbourne, Victoria
+                            <br>
+                            Australia
+                        </address>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 contact-right">
+
+                    <form novalidate action="mailto:Transpo.trns@gmail.com" name="frm" method="post">
+                        <div class="form-group has-feedback">
+                            <label class="sr-only">First name:</label>
+                            <input type="text" name="name" class="form-control" placeholder="First name" required>
+
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label class="sr-only">Last name:</label>
+                            <input type="text" name="surname" class="form-control" placeholder="Last name" required>
+
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label class="sr-only">Email:</label>
+                            <input type="email" name="email" class="form-control" placeholder="Email" required>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" name="comment" for="comment">Comment:</label>
+                            <textarea class="form-control" rows="5" id="comment" placeholder="Description"></textarea>
+                        </div>
+                        <div class="contact-buttons pull-left">
+                            <input type="submit" name="submit" value="Send" />
+                            <input type="reset" value="Reset" />
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <footer class="-bg-footer" id="footer">
+        <div class="container-fluid">
+            <div class="row footer-align">
+                <div class="col-md-4 col-sm-4">
+                    <h5>Transpo</h5>
+                    <hr class="hr-foot">
+                    <div class="footer-items">
+                        <p class="footer">
+                            Transpo is a small project, made by highschoolers, and definitely made with fun!
+                        </p>
+                        <ul class="social-networks">
+                            <a href="www.instagram.com" class="instagram"><i class="fa fa-instagram"></i></a>
+                            <a href="www.facebook.com" class="facebook"><i class="fa fa-facebook"></i></a>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <h5>Our contact</h5>
+                    <hr class="hr-foot">
+                    <div class="footer-items">
+                        <address>
+                            22, Northstreet Road
+                            <br>
+                            Melbourne, Victoria
+                            <br>
+                            Australia
+                            <br>
+                            <i class="fa fa-phone address"></i> +972 123 5672
+                            <br>
+                            <i class="fa fa-fax address"></i> +876 5432 1234
+                            <br>
+                            <i class="fa fa-envelope address"></i> <a href="mailto:Transpo.trns@gmail.com">Transpo.trns@gmail.com</a>
+                        </address>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <h5>Open hours</h5>
+                    <hr class="hr-foot">
+                    <div class="footer-items">
+                        <ul>
+                            <li>Mon-Fri: 08:00-22:00</li>
+                            <li>Sat    : 09:00-22:00</li>
+                            <li>Sun    : 09:00-16:00</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a class="to-top" href="#myPage" title="toTop">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </footer>
+
+
+
+    <script src="script.js"></script>
+    <script>
+        $(function () {
+
+            var nav = $('.navbar'),
+                doc = $(document),
+                win = $(window);
+
+            win.scroll(function () {
+
+                if (doc.scrollTop() > 80) {
+                    nav.addClass('scrolled');
+                } else {
+                    nav.removeClass('scrolled');
+                }
+
+            });
+
+            win.scroll();
+
+        });
+
+
+        /* ***** Btn More-Less ***** */
+        $("#more").click(function () {
+            var $this = $(this);
+            $this.toggleClass('more');
+            if ($this.hasClass('more')) {
+                $this.text('More');
+            } else {
+                $this.text('Less');
+            }
+        });
+
+
+
+
+        /* ***** Slideanim  ***** */
+        $(window).scroll(function () {
+            $(".slideanim").each(function () {
+                var pos = $(this).offset().top;
+
+                var winTop = $(window).scrollTop();
+                if (pos < winTop + 600) {
+                    $(this).addClass("slide");
+                }
+            });
+        });
+
+
+
+
+        /* ***** Smooth Scrolling  ***** */
+        $(document).ready(function () {
+            $(".navbar a, #service a").on('click', function (event) {
+
+                if (this.hash !== "") {
+                    event.preventDefault();
+                    var hash = this.hash;
+
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 900, function () {
+
+                        window.location.hash = hash;
+                    });
+                }
+            });
+
+
+            /* ***** Scroll to Top ***** */
+            $(window).scroll(function () {
+                if ($(this).scrollTop() >= 300) {
+                    $('.to-top').fadeIn(200);
+                } else {
+                    $('.to-top').fadeOut(200);
+                }
+            });
+            $('.to-top').click(function () {
+                $('.body,html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+        })</script>
+
+
+
+    <script>
+
+        $("#login-button").click(function (event) {
+            event.preventDefault();
+
+            $('form').fadeOut(500);
+            $('.wrapper').addClass('form-success');
+            $('form').submit();
+
+        });
+    </script>
+</body>
+</html>

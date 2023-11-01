@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/css/websitestyle.css" rel="stylesheet" />
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+
+            var nav = $('.navbar'),
+                doc = $(document),
+                win = $(window);
+
+            win.scroll(function () {
+
+                if (doc.scrollTop() > 80) {
+                    nav.addClass('scrolled');
+                } else {
+                    nav.removeClass('scrolled');
+                }
+
+            });
+
+            win.scroll();
+
+        });
+
+
+
+
+
+        /* ***** Slideanim  ***** */
+        $(window).scroll(function () {
+            $(".slideanim").each(function () {
+                var pos = $(this).offset().top;
+
+                var winTop = $(window).scrollTop();
+                if (pos < winTop + 600) {
+                    $(this).addClass("slide");
+                }
+            });
+        });
+
+
+
+
+        /* ***** Smooth Scrolling  ***** */
+        $(document).ready(function () {
+            $(".navbar a, #service a").on('click', function (event) {
+
+                if (this.hash !== "") {
+                    event.preventDefault();
+                    var hash = this.hash;
+
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 900, function () {
+
+                        window.location.hash = hash;
+                    });
+                }
+            });
+    </script>
+
+    <title>@ViewData["Title"]</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <!-- Custom Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Leckerli+One" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="style.css" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+
+<style>
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        .dropdown-menu a {
+            color: black;
+            font:bolder;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+            .dropdown-menu a:hover {
+                background-color: #ddd;
+            }
+</style>
+
+    
+</head>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+        <a class="navbar-brand" asp-action="Index" asp-controller="Passenger"><img src="~/images/51-517748_bus-icon-png-white.png" width="25" height="25" /> Transpo</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav ml-auto">
+                @if (User.IsInRole("Manager"))
+                {
+                    <li class="nav-item dropdown ">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">More <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+
+                            <li> <a asp-controller="Passenger" asp-action="GetAllUsers">All Users</a></li>
+                            <li> <a asp-controller="Ticket" asp-action="GetAllTickets">My Tickets</a></li>
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Passenger" asp-action="ViewProfile">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Station" asp-action="Index">Stations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Route" asp-action="Index">Buses</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="btn ml-2 btn-warning" asp-controller="Auth" asp-action="Logout">Log Out</a>
+                    </li>
+                }
+
+                @if (User.IsInRole("Passenger"))
+                {
+                    <li class="nav-item dropdown ">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">More <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+
+                            <li> <a asp-controller="Passenger" asp-action="ViewProfile">Profile</a></li>
+                            <li> <a asp-controller="Ticket" asp-action="GetAllTickets">My Tickets</a></li>
+
+                        </ul>
+                    </li>
+
+                  
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Station" asp-action="Index">Stations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Route" asp-action="Index">Buses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn ml-2 btn-warning" asp-controller="Auth" asp-action="Logout">Log Out</a>
+                    </li>
+                }
+
+
+                @if ((User.IsInRole("Passenger") == false) && (User.IsInRole("Manager") == false))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Station" asp-action="Index">Stations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Route" asp-action="Index">Buses</a>
+                    </li>
+                    <li class="nav-item">
+
+                        <a class="btn ml-2 btn-warning" asp-controller="Passenger" asp-action="ViewLogin">Log In</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
+
+    <script>
+            $(document).ready(function () {
+                $(".dropdown").hover(
+                    function () {
+                        $('.dropdown-menu', this).not('.in .dropdown-menu').stop(true, true).slideDown("fast");
+                        $(this).toggleClass('open');
+                    },
+                    function () {
+                        $('.dropdown-menu', this).not('.in .dropdown-menu').stop(true, true).slideUp("fast");
+                        $(this).toggleClass('open');
+                    }
+                );
+            });
+    </script>
+
+
+    @RenderBody()
+
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+       
+
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

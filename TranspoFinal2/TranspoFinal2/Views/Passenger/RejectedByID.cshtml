@@ -1,0 +1,60 @@
+﻿@model TranspoFinal2.Models.Passenger
+@{
+    ViewData["Title"] = "This ID is already taken!";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <style>
+
+        body {
+            background: linear-gradient( #de9b35, #FEB58A) fixed; /* W3C, IE 10+ / Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+        .container {
+            background: #fff;
+            box-shadow: 15px 20px 0px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <br />
+    <br />
+    <br />
+  
+
+    <div class="container" style="width:60%; padding:30px; margin-bottom:25px">
+
+        <form asp-action="ViewRegisterAfterRejectedById" method="post" enctype="multipart/form-data">
+            
+                <input asp-for="pass_name" hidden>
+                <input asp-for="pass_ID" hidden>
+                <input asp-for="file1" hidden>
+                <input asp-for="pass_email" hidden>
+            
+                <input asp-for="pass_psw" hidden>
+           
+                <input asp-for="pass_birthday" hidden>
+          
+
+            <br />
+            <h1> Try Again!</h1>
+            <br />
+            <h3>This ID is already taken!</h3>
+
+            <div class="form-check">
+                <button type="submit" class="btn"  style="position:center">Back</button>
+            </div>
+
+        </form>       
+
+
+    </div>
+</body>
+
+</html>

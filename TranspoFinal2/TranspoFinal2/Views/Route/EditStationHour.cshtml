@@ -1,0 +1,249 @@
+﻿@model TranspoFinal2.Models.StationRoute
+@{
+    ViewData["Title"] = "Edit Station Hour";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/searchstyle.css" />
+    <style>
+
+        a {
+            color: #69C;
+            text-decoration: none;
+        }
+
+            a:hover {
+                color: #F60;
+            }
+
+        h1 {
+            font: 1.7em;
+            line-height: 110%;
+            color: #000;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        p {
+            margin: 0 0 20px;
+        }
+
+
+        input {
+            outline: none;
+        }
+
+
+
+        select {
+            border-bottom: 1px solid #c9c9c9;
+            border-top: 0;
+            border-left: 0;
+            border-right: 0;
+            color: #444444;
+            -webkit-appearance: button;
+            -webkit-border-radius: 2px;
+            -webkit-padding-end: 20px;
+            -webkit-padding-start: 2px;
+            -webkit-user-select: none;
+            background-color: white;
+            background-image: url('https://d30y9cdsu7xlg0.cloudfront.net/png/221782-200.png');
+            background-position: 97% center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            margin: 20px;
+            overflow: hidden;
+            padding: 5px 10px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .option {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <br />
+    <br />
+    <br />
+
+    <div class="container">
+        <br />
+        <h2>Choose Hours</h2>
+
+        <br />
+        @using (Html.BeginForm("EditStationRouteAfter", "Route", FormMethod.Post))
+        {
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Station Name</th>
+                        <th scope="col">Station ID</th>
+                        <th scope="col">Station Location</th>
+                        <th scope="col"><img src="~/images/clock-icon.png" width="30" height="30" /> Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (station st in ((List<station>)ViewBag.l3))
+                    {
+
+                        @if (Model.station_ID.CompareTo(st.station_ID) == 0)
+                        {
+                            <tr>
+                                <th scope="row">@ViewBag.l2</th>
+                                <td>@st.station_name</td>
+                                <td>@st.station_ID</td>
+                                <td>@st.station_location</td>
+                                <td>
+                                    <div class="row">
+
+
+                                        <select asp-for="@Model.hour" style="width:30%; height:30%">
+                                            <option>HH</option>
+                                            @for (int i = 0; i < 24; i++)
+                                            {
+                                                if (i < 10)
+                                                {
+                                                    string str = "0" + i;
+                                                    <option value="@str" Model[j].hour>@str</option>
+                                                }
+
+                                                else
+                                                {
+                                                    <option value="@i">@i</option>
+                                                }
+                                            }
+
+                                        </select>
+
+
+
+                                        <!-- <div class="styled-select black rounded">-->
+
+                                        <select asp-for="@Model.minute" style="width:30%; height:30%">
+                                            <option>MM</option>
+                                            @for (int i = 0; i < 60; i++)
+                                            {
+                                                if (i < 10)
+                                                {
+                                                    string str = "0" + i;
+                                                    <option value="@str">@str</option>
+                                                }
+
+                                                else
+                                                {
+                                                    <option value="@i">@i</option>
+                                                }
+                                            }
+                                        </select>
+
+
+                                        <input asp-for="@Model.route_ID" type="hidden"/>
+                                        <input asp-for="@Model.station_ID" type="hidden"/>
+                                        <input asp-for="@Model.the_ID" type="hidden" />
+
+
+
+                                    </div>
+                                </td>
+                                @{ViewBag.l2 = ViewBag.l2 + 1;
+                                    break;}
+
+                            </tr>
+
+                                    }
+                                    }
+                    </tbody>
+                    </table>
+                    <button type="submit">Done</button>
+
+            }
+                </div>
+
+
+
+
+    <script>
+        var selectElements = document.getElementsByClassName('custom-select');
+
+        var renderSelectEl = function (el) {
+
+            var selectOpen = false,
+                selectWrapEl = el.getElementsByClassName('select-wrap')[0],
+                selectHeight = el.clientHeight,
+                htmlSelectEl = el.getElementsByTagName('select')[0],
+                htmlSelectOptionEls = htmlSelectEl.getElementsByTagName('option'),
+                selectOptions = [],
+                dropdownOptsEl = el.getElementsByClassName('dropdown-options')[0],
+                selectionOptsEl = el.getElementsByClassName('selection-options')[0],
+                optionCount = 0,
+                selectSelectionEl = el.getElementsByClassName('select-selection')[0],
+                selectedIndex = 0;
+
+            for (optEl in htmlSelectOptionEls) {
+                var optTxt = htmlSelectOptionEls[optEl].textContent;
+                if (optTxt) { selectOptions.push(optTxt) };
+            }
+
+            for (opt in selectOptions) {
+                var optTxt = selectOptions[opt];
+                var dropdownNode = document.createElement('span');
+                var dropdownTextNode = document.createTextNode(optTxt);
+                dropdownNode.appendChild(dropdownTextNode);
+                var selectionNode = document.createElement('span');
+                var selectionTextNode = document.createTextNode(optTxt);
+                selectionNode.appendChild(selectionTextNode);
+                dropdownOptsEl.appendChild(dropdownNode);
+                selectionOptsEl.appendChild(selectionNode);
+                optionCount++;
+            }
+
+            el.onclick = function () {
+                if (selectOpen) {
+                    selectOpen = false;
+                    selectWrapEl.style.height = '';
+                    selectSelectionEl.style.top = '';
+                    dropdownOptsEl.style.top = -(selectHeight * selectedIndex) + 'px';
+                } else {
+                    selectOpen = true;
+                    selectWrapEl.style.height = selectHeight * optionCount + 'px';
+                    dropdownOptsEl.style.top = '';
+                    selectSelectionEl.style.top = (selectHeight * selectedIndex) + 'px';
+                }
+                this.classList.toggle('open');
+                console.log(selectOpen);
+            }
+
+            dropdownOptsEl.addEventListener('mouseover', function (event) {
+                var child = event.target;
+                selectedIndex = 0;
+                while ((child = child.previousSibling) != null)
+                    selectedIndex++;
+                console.log(-(selectHeight * selectedIndex) + 'px');
+                selectionOptsEl.style.top = -(selectHeight * selectedIndex) + 'px';
+                selectSelectionEl.style.top = (selectHeight * selectedIndex) + 'px';
+            });
+
+        }
+
+        for (el in selectElements) {
+            if (selectElements[el]) {
+                renderSelectEl(selectElements[el]);
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,172 @@
+﻿@model TranspoFinal2.Models.Passenger
+@{
+    ViewData["Title"] = "AllUsers";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/searchstyle.css" />
+
+
+
+    <style>
+
+        a {
+            color: #69C;
+            text-decoration: none;
+        }
+
+            a:hover {
+                color: #F60;
+            }
+
+        h1 {
+            font: 1.7em;
+            line-height: 110%;
+            color: #000;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        p {
+            margin: 0 0 20px;
+        }
+
+
+        input {
+            outline: none;
+        }
+
+            input[type=search] {
+                -webkit-appearance: textfield;
+                -webkit-box-sizing: content-box;
+                font-family: inherit;
+                font-size: 100%;
+            }
+
+            input::-webkit-search-decoration,
+            input::-webkit-search-cancel-button {
+                display: none;
+            }
+
+
+            input[type=search] {
+                background: #ededed url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
+                border: solid 1px #ccc;
+                padding: 9px 10px 9px 32px;
+                width: 55px;
+                -webkit-border-radius: 10em;
+                -moz-border-radius: 10em;
+                border-radius: 10em;
+                -webkit-transition: all .5s;
+                -moz-transition: all .5s;
+                transition: all .5s;
+            }
+
+                input[type=search]:focus {
+                    width: 130px;
+                    background-color: #fff;
+                    border-color: #66CC75;
+                    -webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
+                    -moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
+                    box-shadow: 0 0 5px rgba(109,207,246,.5);
+                }
+
+
+            input:-moz-placeholder {
+                color: #999;
+            }
+
+            input::-webkit-input-placeholder {
+                color: #999;
+            }
+    </style>
+</head>
+<body>
+    <br />
+    <br />
+    <br />
+
+    <div class="container">
+        <br />
+        <h2>All Buses</h2>
+
+        <form asp-action="SearchUser" method="post" style="text-align:center">
+            <input asp-for="pass_name" type="search" placeholder="Search">
+        </form>
+
+
+        <br />
+        <br />
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User ID</th>
+                    <th scope="col">User Name</th>
+                    <th scope="col">Is Active</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Passenger st in ((List<Passenger>)ViewBag.users))
+                {
+                    <tr>
+                        <th scope="row">@ViewBag.l2</th>
+                        <td>@st.pass_ID</td>
+                        <td>@st.pass_name</td>
+                        <td>
+                            @if (st.pass_active)
+                            {
+                                <img src="~/images/Light-Bulb-green-48.png" width="32" height="32" />
+                            }
+                            @if (!st.pass_active)
+                            {
+                                <img src="~/images/Bulb-Off-UI-48.png" width="32" height="32" />
+                            }
+                        </td>
+                        <td>
+                            @Html.ActionLink("Info", "ViewProfile", st, new { @class = "btn btn-dark" })
+                        </td>
+                    </tr>
+                    ViewBag.l2++;
+                }
+
+
+
+            </tbody>
+        </table>
+
+
+
+
+
+    </div>
+
+    <script>
+        function searchToggle(obj, evt) {
+            var container = $(obj).closest(".search-wrapper");
+            if (!container.hasClass("active")) {
+                container.addClass("active");
+                evt.preventDefault();
+            } else if (
+                container.hasClass("active") &&
+                $(obj).closest(".input-holder").length == 0
+            ) {
+                container.removeClass("active");
+                // clear input
+                container.find(".search-input").val("");
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
+

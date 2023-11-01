@@ -1,0 +1,220 @@
+﻿@model TranspoFinal2.Models.route
+@{
+    ViewData["Title"] = "Add Stations To Bus";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/searchstyle.css" />
+    <style>
+
+        a {
+            color: #69C;
+            text-decoration: none;
+        }
+
+            a:hover {
+                color: #F60;
+            }
+
+        h1 {
+            font: 1.7em;
+            line-height: 110%;
+            color: #000;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        p {
+            margin: 0 0 20px;
+        }
+
+
+        input {
+            outline: none;
+        }
+
+            input[type=search] {
+                -webkit-appearance: textfield;
+                -webkit-box-sizing: content-box;
+                font-family: inherit;
+                font-size: 100%;
+            }
+
+            input::-webkit-search-decoration,
+            input::-webkit-search-cancel-button {
+                display: none;
+            }
+
+
+            input[type=search] {
+                background: #ededed url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
+                border: solid 1px #ccc;
+                padding: 9px 10px 9px 32px;
+                width: 55px;
+                -webkit-border-radius: 10em;
+                -moz-border-radius: 10em;
+                border-radius: 10em;
+                -webkit-transition: all .5s;
+                -moz-transition: all .5s;
+                transition: all .5s;
+            }
+
+                input[type=search]:focus {
+                    width: 130px;
+                    background-color: #fff;
+                    border-color: #66CC75;
+                    -webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
+                    -moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
+                    box-shadow: 0 0 5px rgba(109,207,246,.5);
+                }
+
+
+            input:-moz-placeholder {
+                color: #999;
+            }
+
+            input::-webkit-input-placeholder {
+                color: #999;
+            }
+
+        /* The container */
+        .container {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+            /* Hide the browser's default checkbox */
+            .container input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0;
+            }
+
+        /* Create a custom checkbox */
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .container:hover input ~ .checkmark {
+            background-color: #ccc;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .container input:checked ~ .checkmark {
+            background-color: #2196F3;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the checkmark when checked */
+        .container input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .container .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <br />
+        <h2>Choose Stations for Bus @Model.route_ID-@Model.route_name</h2>
+
+        <form asp-action="SearchStationInRoute" method="post" style="text-align:center">
+            <input asp-for="stations[0].station_name" type="search" placeholder="Search">
+        </form>
+        <br />
+    </div>
+
+    <div class="container">
+
+
+
+
+        @using (Html.BeginForm("ChooseHour", "Route", FormMethod.Post))
+        {
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Station Name</th>
+                        <th scope="col">Station ID</th>
+                        <th scope="col">Station Location</th>
+                        <th scope="col">Add</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.stations.Count; i++)
+                    {
+
+                        <tr>
+                            <th scope="row">@ViewBag.l2</th>
+                            <td>@Model.stations[i].station_name</td>
+                            <td>@Model.stations[i].station_ID</td>
+                            <td>@Model.stations[i].station_location</td>
+                            <td>
+                                <label class="container">
+                                    <input asp-for="stations[i].check" type="checkbox" value="true" />
+                                    <input asp-for="stations[i].station_ID" type="hidden" />
+                                    <input asp-for="stations[i].station_name" type="hidden" />
+                                    <input asp-for="stations[i].station_location" type="hidden" />
+
+                                    <span class="checkmark"></span>
+                                </label>
+                            </td>
+                            @{ViewBag.l2 = ViewBag.l2 + 1;}
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+            <input asp-for="route_ID" type="hidden" />
+            <input asp-for="route_name" type="hidden" />
+            <input asp-for="route_company" type="hidden" />
+            <button type="submit">Next</button>
+        }
+
+
+    </div>
+
+</body>
+
+</html>

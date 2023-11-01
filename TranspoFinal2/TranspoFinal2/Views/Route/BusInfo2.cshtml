@@ -1,0 +1,390 @@
+﻿@model TranspoFinal2.Models.route
+@{
+    ViewData["Title"] = "Bus Info";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="~/css/roundbuttonstyle.css" rel="stylesheet" />
+    
+
+    <style>
+        body {
+            background: linear-gradient( #de9b35, #FEB58A) fixed; /* W3C, IE 10+ / Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
+        .emp-profile {
+            padding: 3%;
+            margin-top: 3%;
+            margin-bottom: 3%;
+            border-radius: 0.5rem;
+            background: #fff;
+        }
+
+        .profile-img {
+            text-align: center;
+        }
+
+            .profile-img img {
+                width: 70%;
+                height: 100%;
+            }
+
+            .profile-img .file {
+                position: relative;
+                overflow: hidden;
+                margin-top: -20%;
+                width: 70%;
+                border: none;
+                border-radius: 0;
+                font-size: 15px;
+                background: #212529b8;
+            }
+
+                .profile-img .file input {
+                    position: absolute;
+                    opacity: 0;
+                    right: 0;
+                    top: 0;
+                }
+
+        .profile-head h5 {
+            color: #333;
+        }
+
+        .profile-head h6 {
+            color: #0062cc;
+        }
+
+        .profile-edit-btn {
+            border: none;
+            border-radius: 1.5rem;
+            width: 70%;
+            padding: 2%;
+            font-weight: 600;
+            color: #6c757d;
+            cursor: pointer;
+        }
+
+        .proile-rating {
+            font-size: 12px;
+            color: #818182;
+            margin-top: 5%;
+        }
+
+            .proile-rating span {
+                color: #495057;
+                font-size: 15px;
+                font-weight: 600;
+            }
+
+        .profile-head .nav-tabs {
+            margin-bottom: 5%;
+        }
+
+            .profile-head .nav-tabs .nav-link {
+                font-weight: 600;
+                border: none;
+            }
+
+                .profile-head .nav-tabs .nav-link.active {
+                    border: none;
+                    border-bottom: 2px solid #0062cc;
+                }
+
+        .profile-work {
+            padding: 14%;
+            margin-top: -15%;
+        }
+
+            .profile-work p {
+                font-size: 12px;
+                color: #818182;
+                font-weight: 600;
+                margin-top: 10%;
+            }
+
+            .profile-work a {
+                text-decoration: none;
+                color: #495057;
+                font-weight: 600;
+                font-size: 14px;
+            }
+
+            .profile-work ul {
+                list-style: none;
+            }
+
+        .profile-tab label {
+            font-weight: 600;
+        }
+
+        .profile-tab p {
+            font-weight: 600;
+            color: #0062cc;
+        }
+    </style>
+</head>
+<body>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="container emp-profile" style="margin-top:25px">
+        <form method="post" asp-action="ViewEditBus">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-img">
+                        <h5 style="font-size:100px">@Model.route_ID</h5>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="profile-head" style="float:left">
+                        <h5>
+                            @Model.route_name
+                        </h5>
+                        <h6>
+                            @Model.route_company
+                        </h6>
+                        <br />
+                        <br />
+                        <p class="proile-rating">Ticket Price : <span>@ViewBag.ticket</span></p>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Stations</a>
+                            </li>
+
+                        </ul>
+
+
+
+                        @if (ViewBag.l3.Count != 0)
+                        {
+
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Station Name</th>
+                                        <th>Station ID</th>
+                                        <th>Station Location</th>
+                                        <th>Hour</th>
+                                        <th style="width: 36px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < ViewBag.l3.Count; i++)
+                                    {
+                                        <tr>
+                                            @foreach (station st in ((List<station>)ViewBag.l1))
+                                            {
+                                                if (ViewBag.l3[i].station_ID.CompareTo(st.station_ID) == 0)
+                                                {
+                                                    <td>@ViewBag.l2</td>
+                                                    <td>@st.station_name</td>
+                                                    <td>@st.station_ID</td>
+                                                    <td>@st.station_location</td>
+                                                    <td>
+                                                        @ViewBag.l3[i].each_hours
+                                                    </td>
+                                                    if (User.IsInRole("Manager"))
+                                                    {
+                                                        <td>
+                                                            <div class="row">
+                                                                <a asp-action="ViewEditStationRoute" asp-route-the_ID="@ViewBag.l3[i].the_ID"><img src="~/images/Edit-32.png" style="height:20px; width:20px" /></a>
+                                                                <a id="Create2" asp-action="DeleteStationFromRoute" asp-route-the_ID="@ViewBag.l3[i].the_ID"><img src="~/images/Delete-256.png" style="height:20px; width:20px" /></a>
+                                                            </div>
+                                                        </td>
+                                                    }
+                                                }
+                                            }
+                                            @{ ViewBag.l2 += 1;}
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        }
+
+
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    @{if (User.IsInRole("Manager"))
+                        {
+                            <input class="profile-edit-btn" type="submit" value=" Edit Bus " />
+                        }
+                    }
+                    <input asp-for="route_company" type="hidden" />
+                    <input asp-for="route_ID" type="hidden" />
+                    <input asp-for="route_name" type="hidden" />
+                </div>
+            </div>
+        </form>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-work">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="tab-content profile-tab">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            @if (ViewBag.l3.Count == 0)
+                            {
+
+                                <label> There are no stations that this route pass by</label>
+                            }
+
+                        </div>
+                        @{
+                            if (User.IsInRole("Manager"))
+                            {
+                                <div class="row" style="position:center">
+                                    <button asp-action="ChooseStation" id="Create3" class="btnghost" style="position:center"><img src="~/images/Info-256.png" style="width:20px; height:20px" /> Manage Stations</button>
+
+                                    <button asp-route-route_ID="@Model.route_ID" id="Create4" class="btnghost" style="position:center"><img src="~/images/Info-256.png" style="width:20px; height:20px" /> Manage Ticket</button>
+
+                                    <form method="post" id="sampleform" asp-action="DeleteBus">
+                                        <input asp-for="route_ID" type="hidden" />
+                                        <input id="Create" type="button" value="Delete Bus" class="btnghost2" style="position:center" />
+
+                                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+                                        <script type="text/javascript">
+                                            $(function () {
+                                                $("#Create").click(function (e) {
+                                                    if (confirm("Are you sure you want to delete this bus? All of its information including its stations will be deleted")) {
+                                                        console.log('Form is submitting');
+                                                        $("#sampleform").submit();
+                                                    } else {
+                                                        console.log('User clicked no.');
+                                                    }
+                                                });
+                                            });
+                                        </script>
+                                    </form>
+
+
+                                    <form method="post" id="sampleform2" asp-action="DeleteStationFromRoute">
+
+                                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+                                        <script type="text/javascript">
+                                            $(function () {
+                                                $("#Create2").click(function (e) {
+                                                    if (confirm("Are you sure you want to delete this station? All of its information will be deleted")) {
+                                                        console.log('Form is submitting');
+                                                        $("#sampleform2").submit();
+                                                    } else {
+                                                        console.log('User clicked no.');
+                                                    }
+                                                });
+                                            });
+                                        </script>
+                                    </form>
+
+
+
+
+
+                                    <form method="post" id="sampleform3" asp-action="ChooseStation">
+                                        <input asp-for="route_ID" type="hidden" />
+                                        <script type="text/javascript">
+                                            $(function () {
+                                                $("#Create3").click(function (e) {
+
+                                                    $("#sampleform3").submit();
+
+                                                });
+                                            });
+                                        </script>
+                                    </form>
+
+                                    <form method="post" id="sampleform4" asp-action="ViewEditTicketInfo" asp-controller="Route">
+                                        <input asp-for="route_ID" type="hidden" />
+                                        <script type="text/javascript">
+                                            $(function () {
+                                                $("#Create4").click(function (e) {
+
+                                                    $("#sampleform4").submit();
+
+                                                });
+                                            });
+                                        </script>
+                                    </form>
+
+                                </div>
+                            }
+
+                            if (User.IsInRole("Passenger") || User.IsInRole("Manager"))
+                            {
+                                <div class="row" style="position:center">
+
+                                    <button id="CR" class="btnghost" style="position:center"> Buy Ticket</button>
+
+                                </div>
+
+                                <form method="post" id="sampleform11" asp-action="BuyTicket" asp-controller="Ticket">
+                                    <input asp-for="route_ID" type="hidden" />
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            $("#CR").click(function (e) {
+
+                                                $("#sampleform11").submit();
+
+                                            });
+                                        });
+                                    </script>
+                                </form>
+
+                            }
+
+                            if (!User.IsInRole("Passenger") && !User.IsInRole("Manager"))
+                            {
+                                <div class="row" style="position:center">
+
+                                    <button id="Create13" class="btnghost" style="position:center"> Sign Up To Buy Ticket</button><br /> Or  <button id="Create123" class="btnghost" style="position:center"> Login To Buy Ticket</button>
+                                </div>
+
+                                <form method="post" id="sampleform13" asp-action="ViewRegister" asp-controller="Passenger">
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            $("#Create13").click(function (e) {
+
+                                                $("#sampleform13").submit();
+
+                                            });
+                                        });
+                                    </script>
+                                </form>
+                                <form method="post" id="sampleform123" asp-action="ViewLogin" asp-controller="Passenger">
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            $("#Create123").click(function (e) {
+
+                                                $("#sampleform123").submit();
+
+                                            });
+                                        });
+                                    </script>
+                                </form>
+
+
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+       
+        
+    </div>
+
+</body>
+
+</html>

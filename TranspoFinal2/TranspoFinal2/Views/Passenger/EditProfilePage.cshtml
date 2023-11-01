@@ -1,0 +1,87 @@
+﻿@model TranspoFinal2.Models.Passenger
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="~/css/roundbuttonstyle.css" rel="stylesheet" />
+    <link href="~/css/ConfirmBuy.css" rel="stylesheet" />
+    <style>
+        body {
+            background: linear-gradient( #de9b35, #FEB58A) fixed; /* W3C, IE 10+ / Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+    </style>
+</head>
+<body>
+    <br />
+    <br />
+    <br />
+
+    <div class="wrap">
+        <br />
+        <div class="gov">
+            <!--  Checkout Flow    -->
+            <!--<div class="flows">
+              <ul>
+                <li class="co_shipping active">Shipping</li>
+                <li class="co_billing">Billing</li><li class="co_preview">Preview</li>
+                <li class="co_thanks">Thank You</li>
+              </ul>
+              </div>-->
+            <div class="forms cf">
+                <h3 class="sectionHead cf">Edit Profile Information </h3>
+
+                <form asp-action="EditProfile" asp-controller="Passenger" method="post" enctype="multipart/form-data">
+
+                    <ul class="shippingInfo cf">
+                        <li>
+                            <label asp-for="pass_ID" class="active">ID</label>
+                            <input asp-for="pass_ID" type="text" disabled />
+                        </li>
+                        <li>
+                            <label asp-for="pass_name" class="active">Name</label>
+                            <input asp-for="pass_name" type="text" />
+                        </li>
+                        <li>
+                            <label asp-for="pass_email" class="active">E-mail</label>
+                            <input asp-for="pass_email" type="text" />
+                        </li>
+                        <li>
+                            <label asp-for="pass_psw" class="active">Password</label>
+                            <input asp-for="pass_psw" type="text" />
+                        </li>
+
+                        <li>
+                            <label asp-for="brth" class="active">Birthday</label>
+                            <input asp-for="brth" type="date" />
+                        </li>
+                        <li>
+                            <label class="active">Upload Photo</label>
+                            <input asp-for="file1" type="file" />
+
+                            <input asp-for="the_ID" type="hidden" />
+                            <input asp-for="pass_photo" type="hidden" />
+
+                        </li>
+
+                        <li>
+                            <input type="submit" value="Edit" class="btn" />
+                        </li>
+                    </ul>
+                </form>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

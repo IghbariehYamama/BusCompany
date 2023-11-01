@@ -1,0 +1,466 @@
+﻿@model List<TranspoFinal2.Models.Ticket>
+@{
+    ViewData["Title"] = "Requested Buses";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/css/BusCardsStyle.css" rel="stylesheet" />
+
+    <style>
+        body {
+            background: linear-gradient( #de9b35, #FEB58A) fixed; /* W3C, IE 10+ / Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
+        .container {
+            background: #fff;
+            box-shadow: 15px 20px 0px rgba(0,0,0,0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            -webkit-box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.15);
+        }
+
+
+.dropdown2 {
+  width: 230px;
+  display: inline-block;
+  margin-right: 10px;
+  position: relative;
+}
+.dropdown2.toggle > input {
+  display: none;
+}
+.dropdown2 > a, .dropdown2.toggle > label {
+  border-radius: 2px;
+  box-shadow: 0 6px 5px -5px rgba(0,0,0,0.3);
+}
+.dropdown2 > a::after, .dropdown2.toggle > label::after {
+  content: "";
+  float: right;
+  margin: 15px 15px 0 0;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 10px solid #CCC;
+}
+.dropdown2 ul {
+  list-style-type: none;
+  display: block;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  box-shadow: 0 6px 5px -5px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+        .dropdown2 a, .dropdown2.toggle > label {
+            display: block;
+            padding: 0 0 0 10px;
+            text-decoration: none;
+            line-height: 40px;
+            font-size: 13px;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: #FFF;
+            background-color: #999;
+        }
+.dropdown2 li {
+  height: 0;
+  overflow: hidden;
+  transition: all 500ms;
+}
+.dropdown2.hover li {
+  transition-delay: 300ms;
+}
+.dropdown2 li:first-child a {
+  border-radius: 2px 2px 0 0;
+}
+.dropdown2 li:last-child a {
+  border-radius: 0 0 2px 2px;
+}
+.dropdown2 li:first-child a::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #FFF;
+  margin: -10px 0 0 30px;
+}
+.dropdown2 a:hover, .dropdown2.toggle > label:hover, .dropdown2.toggle > input:checked ~ label {
+  background-color: #EEE;
+  color: #666;
+}
+.dropdown2 > a:hover::after, .dropdown2.toggle > label:hover::after, .dropdown2.toggle > input:checked ~ label::after {
+  border-top-color: #AAA;
+}
+.dropdown2 li:first-child a:hover::before {
+  border-bottom-color: #EEE;
+}
+.dropdown2.hover:hover li, .dropdown2.toggle > input:checked ~ ul li {
+  height: 40px;
+}
+
+
+
+
+        #custom-search-input {
+            margin: 0;
+            margin-top: 10px;
+            padding: 0;
+        }
+
+            #custom-search-input .search-query {
+                padding-right: 3px;
+                padding-right: 4px \9;
+                padding-left: 3px;
+                padding-left: 4px \9;
+                /* IE7-8 doesn't have border-radius, so don't indent the padding */
+                margin-bottom: 0;
+                -webkit-border-radius: 3px;
+                -moz-border-radius: 3px;
+                border-radius: 3px;
+            }
+
+            #custom-search-input button {
+                border: 0;
+                background: none;
+                /** belows styles are working good */
+                padding: 2px 5px;
+                margin-top: 2px;
+                position: relative;
+                left: -28px;
+                /* IE7-8 doesn't have border-radius, so don't indent the padding */
+                margin-bottom: 0;
+                -webkit-border-radius: 3px;
+                -moz-border-radius: 3px;
+                border-radius: 3px;
+                color: #de9b35;
+            }
+
+        .search-query:focus + button {
+            z-index: 3;
+        }
+
+        div button {
+            padding: 6px;
+            border-radius: 4px;
+            border-width: 2px;
+            border-color: #de9b35;
+            background-color: #de9b35;
+            color: #fff;
+            cursor: pointer;
+            border-style: solid;
+            transition: 0.25s ease;
+            font-family: "Roboto", sans-serif;
+        }
+        .a2:hover {
+            color: #de9b35;
+            background-color: transparent;
+        }
+
+
+        .card .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+            top: -5px;
+            left: 105%;
+        }
+
+        .card:hover .tooltiptext {
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <br />
+    <br />
+    <br />
+
+    @if (ViewBag.l1.Count == 0)
+    {
+        <p></p>
+
+
+        <div class="container" style="width:60%; padding:30px; margin-bottom:25px">
+
+            <form asp-action="Index" asp-controller="Passenger" method="post" enctype="multipart/form-data">
+
+
+                <br />
+                <h1>Sorry!</h1>
+                <br />
+                <h3>There are no buses that can get you to your destination</h3>
+
+                <div class="form-check">
+                    <button type="submit" class="btn" style="position:center">Back</button>
+                </div>
+
+            </form>
+            </div>
+            }
+            @if (ViewBag.l1.Count != 0)
+            {
+                <div class="container" style="width:60%; padding:30px; margin-bottom:25px">
+
+                    <br />
+                    <h1> Here Are The Buses</h1>
+                    <br />
+
+
+                    <div class="dropdown2 toggle" style="float:right; z-index:2; margin-bottom:15px">
+                        <input id="t1" type="checkbox">
+                        <label for="t1">Sort By</label>
+                        <ul>
+                            <li><a id="Create4">Cheapest To Most Expensive</a></li>
+                            <li><a id="Create3">Shortest To Longest</a></li>
+                            <li><a id="Create2">Cheapest & Shortest To Most Expensive & Longest</a></li>
+                        </ul>
+                    </div>
+
+
+                    <br />
+
+
+                    @foreach (Ticket st in Model)
+                    {
+
+                        @foreach (StationRoute mn in ((List<StationRoute>)ViewBag.l1))
+                        {
+                            if (mn.route_ID == st.route_ID)
+                            {
+
+                                <section>
+
+                                    @if (User.IsInRole("Passenger") || User.IsInRole("Manager"))
+
+                                    {
+                                        @if (ViewBag.money < double.Parse(st.price))//don't have enough money
+                                        {
+                                            <div class="card flex-md-row box-shadow" style="box-shadow: 10px 10px 0px rgba(0,0,0,0.1); border: 5px solid red; color:#FFF; background-color:#999">
+                                                <p style="font-size:70px; padding: 0.8rem"> @st.route_ID</p>
+                                                <div class="card-body d-flex flex-column align-items-start">
+
+
+                                                    <strong class="d-inline-block mb-2 text-uppercase">@st.from_destination <img src="~/images/Right-Arrow-32.png" /> @st.to_destination</strong>
+
+
+
+                                                    <ul class="fa-ul">
+
+                                                        <li><img src="~/images/Location-Pointer-32.png" height="23" width="25" /> Arrives At: @mn.each_hours</li>
+                                                        <li><img src="~/images/Time-Clock-32.png" height="20" width="20" /> Travel Time: @st.time minutes</li>
+                                                        <li><img src="~/images/Coins-32.png" height="23" width="25" /> Cost: @st.price₪</li>
+
+                                                    </ul>
+                                                </div>
+                                                <div class="card-body d-flex flex-column align-items-end">
+                                                    <div>
+                                                        <img src="~/images/Alert-32.png" height="20" width="20">
+                                                        <span class="tooltiptext">You Don't Have Enough Money!</span>
+
+                                                    </div>
+                                                    <br />
+                                                    <div class="align-items-end mt-5">
+
+                                                        @Html.ActionLink("Learn More", "BusInfo", "Ticket", st, new { @class = "btn a2" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+                                        @if (ViewBag.money >= double.Parse(st.price))
+                                        {
+                                            <div class="card flex-md-row box-shadow" style="box-shadow: 10px 10px 0px rgba(0,0,0,0.1); border: 5px solid; color:#FFF; background-color:#999">
+                                                <p style="font-size:70px; padding: 0.8rem"> @st.route_ID</p>
+                                                <div class="card-body d-flex flex-column align-items-start">
+
+
+                                                    <strong class="d-inline-block mb-2 text-uppercase">@st.from_destination <img src="~/images/Right-Arrow-32.png" /> @st.to_destination</strong>
+
+
+
+                                                    <ul class="fa-ul">
+                                                        <li><img src="~/images/Location-Pointer-32.png" height="23" width="25" /> Arrives At: @mn.each_hours</li>
+                                                        <li><img src="~/images/Time-Clock-32.png" height="20" width="20" /> Travel Time: @st.time minutes</li>
+                                                        <li><img src="~/images/Coins-32.png" height="23" width="25" /> Cost: @st.price₪</li>
+
+                                                    </ul>
+                                                </div>
+                                                <div class="card-body d-flex flex-column align-items-end">
+                                                    <div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="align-items-end mt-5">
+
+                                                        @Html.ActionLink("Learn More", "BusInfo", "Ticket", st, new { @class = "btn a2" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    @if ((User.IsInRole("Passenger") == false) && (User.IsInRole("Manager") == false))
+                                    {
+                                        <div class="card flex-md-row box-shadow" style="box-shadow: 10px 10px 0px rgba(0,0,0,0.1); border: 5px solid; color:#FFF; background-color:#999">
+                                            <p style="font-size:70px; padding: 0.8rem"> @st.route_ID</p>
+                                            <div class="card-body d-flex flex-column align-items-start">
+
+
+                                                <strong class="d-inline-block mb-2 text-uppercase">@st.from_destination <img src="~/images/Right-Arrow-32.png" /> @st.to_destination</strong>
+
+
+
+                                                <ul class="fa-ul">
+
+                                                    <li><img src="~/images/Location-Pointer-32.png" height="23" width="25" /> Arrives At: @mn.each_hours</li>
+                                                    <li><img src="~/images/Time-Clock-32.png" height="20" width="20" /> Travel Time: @st.time minutes</li>
+                                                    <li><img src="~/images/Coins-32.png" height="23" width="25" /> Cost: @st.price₪</li>
+
+                                                </ul>
+                                            </div>
+                                            <div class="card-body d-flex flex-column align-items-end">
+                                                <div>
+                                                </div>
+                                                <br />
+                                                <div class="align-items-end mt-5">
+
+                                                    @Html.ActionLink("Learn More", "BusInfo", "Ticket", st, new { @class = "btn a2" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </section>
+
+
+
+                                <br />
+
+                                ViewBag.l2 = ViewBag.l2 + 1;
+
+
+                            }
+
+                        }
+
+                    }
+
+
+
+
+                </div>
+
+            }<!--the finish of the if count!=0-->
+
+            <script>
+
+        // close the toggle menu if user clicks outside of the menu
+
+        $(document).click(function (event) {
+            if (
+                $('.toggle > input').is(':checked') &&
+                !$(event.target).parents('.toggle').is('.toggle')
+            ) {
+                $('.toggle > input').prop('checked', false);
+            }
+        })
+
+            </script>
+
+            <form method="post" id="sampleform4" asp-action="Cheap" asp-controller="Passenger">
+                @{
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        <input asp-for="@Model[i].route_ID" type="hidden" />
+                        <input asp-for="@Model[i].time" type="hidden" />
+                        <input asp-for="@Model[i].price" type="hidden" />
+                        <input asp-for="@Model[i].from_destination" type="hidden" />
+                        <input asp-for="@Model[i].to_destination" type="hidden" />
+
+                    }
+                    <script type="text/javascript">
+                $(function () {
+                    $("#Create4").click(function (e) {
+
+                        $("#sampleform4").submit();
+
+                    });
+                });
+                    </script>
+                }
+            </form>
+
+
+            <form method="post" id="sampleform3" asp-action="Short" asp-controller="Passenger">
+                @{
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        <input asp-for="@Model[i].route_ID" type="hidden" />
+                        <input asp-for="@Model[i].time" type="hidden" />
+                        <input asp-for="@Model[i].price" type="hidden" />
+                        <input asp-for="@Model[i].from_destination" type="hidden" />
+                        <input asp-for="@Model[i].to_destination" type="hidden" />
+
+                    }
+                    <script type="text/javascript">
+                $(function () {
+                    $("#Create3").click(function (e) {
+
+                        $("#sampleform3").submit();
+
+                    });
+                });
+                    </script>
+                }
+            </form>
+
+
+            <form method="post" id="sampleform2" asp-action="CheapAndShort" asp-controller="Passenger">
+                @{
+                    for (int i = 0; i < Model.Count; i++)
+                    {
+                        <input asp-for="@Model[i].route_ID" type="hidden" />
+                        <input asp-for="@Model[i].time" type="hidden" />
+                        <input asp-for="@Model[i].price" type="hidden" />
+                        <input asp-for="@Model[i].from_destination" type="hidden" />
+                        <input asp-for="@Model[i].to_destination" type="hidden" />
+
+                    }
+                    <script type="text/javascript">
+                $(function () {
+                    $("#Create2").click(function (e) {
+
+                        $("#sampleform2").submit();
+
+                    });
+                });
+                    </script>
+                }
+            </form>
+
+    </body>
+
+</html>
