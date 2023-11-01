@@ -1,4 +1,4 @@
-# BusCompany
+# Welcome to Transpo! 🚍
 ## Full Explanation of the project:
 https://docs.google.com/document/d/1O6zQxdSeGFxGnekSu5v4JTBSiREexhCo/edit
 ## Documentation of the process (with Mor from Google):
